@@ -106,7 +106,7 @@ if __name__ == '__main__':
                                                                 20,
                                                                 setting.hidden_dim,
                                                                 3)
-    model_pre_combined.load_state_dict(torch.load('WORK/dyn_network_combined_gowalla_60_without_b.pth'))
+    model_pre_combined.load_state_dict(torch.load('WORK/dyn_network_combined_gowalla_60.pth'))
     model_pre_combined.to(setting.device)
 
     # for name,params in model_pre.named_parameters():

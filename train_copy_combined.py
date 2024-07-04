@@ -128,7 +128,7 @@ for e in range(60):  # 100
         log_string(log, f'test Loss: {epoch_loss}')
 
     if (e + 1) % 60 == 0:
-        torch.save(model_combined.state_dict(), f"WORK/dyn_network_combined_gowalla_{e + 1}_without_b.pth")
+        torch.save(model_combined.state_dict(), f"WORK/dyn_network_combined_gowalla_{e + 1}.pth")
         break
 
 bar.close()

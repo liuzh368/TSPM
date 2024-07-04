@@ -22,13 +22,13 @@ class DyGraphCombinedModel(nn.Module):
         self.time_embedding_dim = 20  # 时间嵌入维度
 
         # 初始化序列模块
-        self.vecs_use = torch.tensor(np.load("WORK/vecs_use.npy", allow_pickle=True),
+        self.vecs_use = torch.tensor(np.load("WORK/vecs_use_gowalla.npy", allow_pickle=True),
                                      dtype=torch.float32).to(setting.device)  # 初始向量
-        self.list_centroids = list(np.load("WORK/list_centroids.npy", allow_pickle=True))  # 每个聚类中含有的元素(存的不是序号，是array)
+        self.list_centroids = list(np.load("WORK/list_centroids_gowalla.npy", allow_pickle=True))  # 每个聚类中含有的元素(存的不是序号，是array)
         num_centroids = len(self.list_centroids)
         vecs_emblength = self.vecs_use.shape[1]
-        self.I_array = np.load("WORK/I.npy", allow_pickle=True)  # 每个向量对应的聚类
-        self.list_number = np.load("WORK/list_number.npy", allow_pickle=True)
+        self.I_array = np.load("WORK/I_gowalla.npy", allow_pickle=True)  # 每个向量对应的聚类
+        self.list_number = np.load("WORK/list_number_gowalla.npy", allow_pickle=True)
         self.index_list = []
 
         for i in range(num_centroids):
