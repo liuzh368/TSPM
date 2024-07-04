@@ -170,17 +170,17 @@ def laplaEigen(dataMat,k,t):
     arr = np.empty(len(list_centroids), dtype=object)
     for i, item in enumerate(list_centroids):
         arr[i] = np.array(item)
-    np.save("../WORK/list_centroids_4sq", arr, allow_pickle=True)
+    np.save("../WORK/list_centroids_gowalla", arr, allow_pickle=True)
 
     # np.save("../WORK/list_centroids",list_centroids,allow_pickle=True)
 
-    np.save("../WORK/vecs_use_4sq",vecs_use,allow_pickle=True)
-    np.save("../WORK/I_4sq",I,allow_pickle=True)
+    np.save("../WORK/vecs_use_gowalla",vecs_use,allow_pickle=True)
+    np.save("../WORK/I_gowalla",I,allow_pickle=True)
 
     arr2 = np.empty(len(list_number), dtype=object)
     for i, item in enumerate(list_number):
         arr2[i] = np.array(item)
-    np.save("../WORK/list_number_4sq", arr2, allow_pickle=True)
+    np.save("../WORK/list_number_gowalla", arr2, allow_pickle=True)
 
 
 def knn(inX, dataSet, k):
@@ -201,15 +201,15 @@ def normalize(graph):
 
 def load_npz_data():
 
-    loc2loc_npz=sparse.load_npz("../WORK/coo_4sq_neighbors.npz")
+    loc2loc_npz=sparse.load_npz("../WORK/coo_gowalla_neighbors.npz")
 
     i_114514=sp.identity(loc2loc_npz.shape[0], format='coo')
     graph=loc2loc_npz+i_114514*0.01
 
     graph=normalize(graph).tocsr()
-    sparse.save_npz(os.path.join('../WORK/graph_4sq.npz'),graph)
+    sparse.save_npz(os.path.join('../WORK/graph_gowalla.npz'),graph)
 
-    graph=sparse.load_npz("../WORK/graph_4sq.npz")
+    graph=sparse.load_npz("../WORK/graph_gowalla.npz")
     X_ndim = laplaEigen(graph, 100, t = 20)
 
 load_npz_data()

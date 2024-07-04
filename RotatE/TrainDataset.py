@@ -24,8 +24,8 @@ class TrainDataset(Dataset):
 
         self.count = self.count_frequency(triples)  # 统计每一种关系中 每个元素作为头的频率与尾的频率
         self.true_tail = self.get_true_head_and_tail(triples)
-        np.save("../WORK/true_tail_dict_4sq.npy", self.true_tail, allow_pickle=True)
-        np.save("../WORK/count_dict_4sq.npy", self.count, allow_pickle=True)
+        np.save("../WORK/true_tail_dict_gowalla.npy", self.true_tail, allow_pickle=True)
+        np.save("../WORK/count_dict_gowalla.npy", self.count, allow_pickle=True)
         
         print("Dataset has done!")
 
