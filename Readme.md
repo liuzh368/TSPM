@@ -54,9 +54,8 @@ TSPM/data/checkins-4sq.txt
 
 该文件如下使用联合训练方式：
 
-$\mathcal{L} = -\sum_t\psi(||(\xi_{i,T_{z}}^{out}+\xi_t)/2-\xi_{-,T_{z}}^{in}||_2^2-||(\xi_{i,T_{z}}^{out}+\xi_t)/2-\xi_{+,T_{z}}^{in}||_2^2)$
+![SNPM](images/f2.png)
 
-$s_{i,j}^{d}=e^{-\rho_1||\xi_{i}-{\mathbf{e}}_{j}||_{2}^{2}-\rho_2||\xi_{i,T_z}^{out}-\xi_{j,T_z}^{in}||_{2}^{2}}$
 
 - 生成**dyn_network_combined_gowalla_60.pth文件**，其保存了预训练模型。
 
