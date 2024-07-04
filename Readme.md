@@ -54,7 +54,7 @@ TSPM/data/checkins-4sq.txt
 
 该文件如下使用联合训练方式：
 
-![SNPM](images/f2.png)
+![SNPM](images/f2.jpg)
 
 
 - 生成**dyn_network_combined_gowalla_60.pth文件**，其保存了预训练模型。
