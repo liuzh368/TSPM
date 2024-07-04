@@ -158,85 +158,15 @@ class Utils:
             os.makedirs(savedir)
         data= np.concatenate((np.array(self.users).reshape(-1,1), np.array(self.times,dtype=object).reshape(-1,1),
                               np.array(self.time_slots,dtype=object).reshape(-1,1), np.array(self.coords,dtype=object).reshape(-1,1), np.array(self.locs,dtype=object).reshape(-1,1)),axis=1)
-        np.save(os.path.join(savedir,'Pdata_4sq'),data,allow_pickle=True)
+        np.save(os.path.join(savedir,'Pdata_gowalla'),data,allow_pickle=True)
         self.savepath=os.path.join(savedir,'Pdata')
         self.countdata=np.array([self.usernum,self.locnum],dtype=np.int64)
-        np.save(os.path.join(savedir,'Count_4sq'),self.countdata,allow_pickle=True)
+        np.save(os.path.join(savedir,'Count_gowalla'),self.countdata,allow_pickle=True)
 
         print(f"Data saved to {savedir}")
         print("Finished writing data.")
 
-    def create_graph(self):
-        self.freqdata=[]
-        infx=np.load("../data/Pdata.npy",allow_pickle=True)
-        graph_dict=[{},{},{},{}]
-        for userdata in infx:
-            loclen=int(len(userdata[4])*0.8)
-            for i in range(loclen-1):
-                start=userdata[4][i]
-                end=userdata[4][i+1]
-                time=userdata[2][i]
-                time_day=(time%24)//6
-                if graph_dict[time_day].get(key_me(int(start),int(end))) is None:
-                    graph_dict[time_day][key_me(int(start),int(end))]=1
-                else:
-                    graph_dict[time_day][key_me(int(start),int(end))]+=1
 
-        from scipy.sparse import coo_matrix
-        count=0
-
-        for dict in graph_dict:
-            rows=[]
-            cols=[]
-            values=[]
-            for key in dict:
-                rows.append(key.start)
-                cols.append(key.end)
-                values.append(dict[key])
-
-            rows=np.array(rows,dtype=int)
-            cols=np.array(cols,dtype=int)
-            values=np.array(values,dtype=int)
-            graph_loc2loc=coo_matrix((values, (rows, cols)), shape=(self.locnum,self.locnum),dtype=int)
-            np.save(f"../data/graph_loc2loc_nowaste_{count}.npy",graph_loc2loc,allow_pickle=True)
-            count+=1
-
-    def loc2loc_array(self):
-        graph_dict=[{},{},{},{}]
-        infx=np.load("../data/Pdata.npy",allow_pickle=True)
-        for userdata in infx:
-            loclen=int(len(userdata[4])*0.8)
-            for i in range(loclen-1):
-                start=userdata[4][i]
-                end=userdata[4][i+1]
-                time=userdata[2][i]
-                time_day=(time%24)//6 # 显然 0 1 2 3
-                if graph_dict[time_day].get(key_me(int(start),int(end))) is None:
-                    graph_dict[time_day][key_me(int(start),int(end))]=1
-                else:
-                    graph_dict[time_day][key_me(int(start),int(end))]+=1
-        rows=[[] for i in range(4)]
-        cols=[[] for i in range(4)]
-
-        count=0
-        for dict in graph_dict:
-            for key in dict:
-                rows[count].append(key.start)
-                cols[count].append(key.end)
-            rows[count]=np.array(rows[count],dtype=int)
-            cols[count]=np.array(cols[count],dtype=int)
-            loc2loc_array=np.array([rows[count],cols[count]],dtype=int)
-            loc2loc_array=loc2loc_array.swapaxes(0,1)
-            np.save(f"../data/loc2loc_array_nowaste_{count}.npy",loc2loc_array,allow_pickle=True)
-            count+=1
-
-
-    def gps_dict(self):
-        list_work=[]
-        for key in self.poi2gps:
-            list_work.append(self.poi2gps[key])
-        list_work=np.array(list_work)
-        gps_array=np.save("../data/gps_array.npy",list_work,allow_pickle=True)
 
 class key_me(object):
     def __init__(self, start, end):
@@ -250,5 +180,5 @@ class key_me(object):
 
 
 
-filepath= "../data/checkins-4sq.txt"
+filepath= "../data/checkins-gowalla.txt"
 util=Utils(filepath)  # 预处理
