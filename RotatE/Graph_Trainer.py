@@ -11,7 +11,7 @@ from TrainDataset import BidirectionalOneShotIterator
 
 
 class Graph_Trainer:
-    def __init__(self,entity_path,relation_path,relation_tuple_path):
+    def __init__(self, entity_path, relation_path, relation_tuple_path):
 
         self.hidden_dim=200
         self.gamma=6
@@ -69,8 +69,8 @@ class Graph_Trainer:
         start=time.time()
 
 
-        self.count=np.load("../WORK/count_dict_4sq.npy",allow_pickle=True).item()
-        self.true_tail=np.load("../WORK/true_tail_dict_4sq.npy",allow_pickle=True).item()
+        self.count=np.load("../WORK/count_dict_gowalla.npy",allow_pickle=True).item()
+        self.true_tail=np.load("../WORK/true_tail_dict_gowalla.npy",allow_pickle=True).item()
         #self.kge_model=np.load("LogicData/kge_model-loc2loc.npy",allow_pickle=True).item()
 
         #self.evaluate(flag=False)
@@ -86,7 +86,7 @@ class Graph_Trainer:
                 self.evaluate(flag=False)
             if step+1==2000:
                 self.evaluate(flag=True)
-                np.save("../WORK/kge_model-4sq.npy",self.kge_model)
+                np.save("../WORK/kge_model-gowalla.npy",self.kge_model)
                 # torch.save(self.kge_model.state_dict(), "../WORK/kge_model-gowalla.pth") # 修改
                 break
             if (step+1)%8000==0 and (step+1)<=20000:
@@ -153,7 +153,7 @@ class Graph_Trainer:
             col=np.array(col)
             value_array=np.array(value_array)
             coo_m=coo_matrix((value_array, (row, col)),shape=(self.poi_len, self.poi_len))
-            sparse.save_npz(os.path.join('../WORK/coo_4sq_neighbors.npz'),coo_m)
+            sparse.save_npz(os.path.join('../WORK/coo_gowalla_neighbors.npz'),coo_m)
 
     def f_s(self,lng1,lat1,lng2,lat2): # long 是 经度 lat 是维度
         lng1=np.deg2rad(lng1)
@@ -170,4 +170,4 @@ class Graph_Trainer:
         distance=torch.tensor(distance,dtype=torch.float32)
         return distance
 
-G_T=Graph_Trainer("../WORK/entity_list_4sq.npy","../WORK/relation_dict_4sq.npy","../WORK/relation_only_pre_and_sub_4sq.npy")
+G_T=Graph_Trainer("../WORK/entity_list_gowalla.npy","../WORK/relation_dict_gowalla.npy","../WORK/relation_only_pre_and_sub_gowalla.npy")

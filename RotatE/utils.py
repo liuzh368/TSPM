@@ -54,7 +54,7 @@ class Graph_Embedding:
         relation_list = relation_pre_and_sub
         relation_array = np.array(relation_list, dtype=np.int32)
 
-        np.save("../WORK/relation_only_pre_and_sub", relation_array, allow_pickle=True)
+        np.save("../WORK/relation_only_pre_and_sub_gowalla", relation_array, allow_pickle=True)
 
     def precursor_and_subsequent_relations(self):
         precursor_dict = {}  # 用于存储先前访问和后续访问的关系
