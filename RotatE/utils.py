@@ -34,17 +34,18 @@ class Graph_Embedding:
             os.makedirs("../WORK")
 
         # 现在尝试保存文件
-        np.save("../WORK/entity_list_4sq", np.array(poilist, dtype=np.int32), allow_pickle=True)
+        np.save("../WORK/entity_list_gowalla", np.array(poilist, dtype=np.int32), allow_pickle=True)
         print("entity is Done")
 
     def create_relation_file(self):
         self.relation_dict={"pre_and_sub_and_self":0}
-        np.save("../WORK/relation_dict_4sq",self.relation_dict,allow_pickle=True)
+        np.save("../WORK/relation_dict_gowalla", self.relation_dict, allow_pickle=True)
         print("relation is Done")
 
     def create_tuplerelations_file(self):
         # 获取包含时间戳的关系列表
         relation_pre_and_sub = self.precursor_and_subsequent_relations()  # 1,2
+
         # 分时间段保存关系
         # self.save_relations_by_timeslot(relations_with_timestamp)
 
@@ -53,12 +54,12 @@ class Graph_Embedding:
         relation_list = relation_pre_and_sub
         relation_array = np.array(relation_list, dtype=np.int32)
 
-        np.save("../WORK/relation_only_pre_and_sub_4sq", relation_array, allow_pickle=True)
+        np.save("../WORK/relation_only_pre_and_sub", relation_array, allow_pickle=True)
 
     def precursor_and_subsequent_relations(self):
         precursor_dict = {}  # 用于存储先前访问和后续访问的关系
         list_relations = []  # 存储所有关系的列表
-        infx = np.load("../data/Pdata_4sq.npy", allow_pickle=True)  # 加载数据，这里假设是所有用户的 位置访问数据
+        infx = np.load("../data/Pdata_gowalla.npy", allow_pickle=True)  # 加载数据，这里假设是所有用户的 位置访问数据
         for userdata in infx:  # 遍历每个用户的数据
             timestamps = userdata[1] # 时间戳列
             # loclen = int(len(userdata[4])*0.8)   # 计算该用户访问位置的80%，用于建立关系
@@ -101,11 +102,6 @@ class Graph_Embedding:
             np.save(f"../WORK/relation_only_pre_and_sub_gowalla_new_{timeslot}.npy", np.array(rels, dtype=np.int32), allow_pickle=True)
 
 
-
-
-
-
-
     def get_timeslot(self, hour):
         if 22 <= hour or hour < 6:
             return 0
@@ -115,9 +111,7 @@ class Graph_Embedding:
             return 2
 
 
-
-
-g_e=Graph_Embedding("../data/checkins-4sq.txt","../data/Pdata_4sq.npy","../data/Count_4sq.npy")
+g_e=Graph_Embedding("../data/checkins-gowalla.txt.txt","../data/Pdata_gowalla.npy","../data/Count_gowalla.npy")
 g_e.create_entity_file()
 g_e.create_relation_file()
 g_e.create_tuplerelations_file()
